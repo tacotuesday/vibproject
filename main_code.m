@@ -61,14 +61,17 @@ legend('H_1_2','H_2_2','H_3_2','H_4_2','H_5_2','H_6_2','H_7_2');
 grid on
 
 % Determine natural frequencies from FRF of each accelerometer
-omega_1 = [147.8, 150.1, 152, 150.5, 152.3, 150.6, 150.5];
-omega_2 = [291.5, 302.7, 305.3, 295, 291.8, 291.8, 292.7];
-omega_3 = [450.8, 450.8, 451.0, 450.6, 456, 452.2, 451.7];
-omega(1) = mean(omega_1, 2); % Units: Hz
-omega(2) = mean(omega_2, 2);
-omega(3) = mean(omega_3, 2);
+omega = [45 75 100 150 300 450 625];
+% omega_1 = [147.8, 150.1, 152, 150.5, 152.3, 150.6, 150.5];
+% omega_2 = [291.5, 302.7, 305.3, 295, 291.8, 291.8, 292.7];
+% omega_3 = [450.8, 450.8, 451.0, 450.6, 456, 452.2, 451.7];
+% omega(1) = mean(omega_1, 2); % Units: Hz
+% omega(2) = mean(omega_2, 2);
+% omega(3) = mean(omega_3, 2);
 % fprintf('Measured natural frequencies (Hz):')
 % disp(omega)
+
+
 
 %% 2. finding damping ratios by the half-power point method
 Himag = imag(H); % imaginary component of H
@@ -76,12 +79,16 @@ Hmag = sqrt(Hreal.^2.+Himag.^2); % magnitude of H
 
 % the frequencies must be partitioned out into 3 sections to plot lines
 spacing_bucket = [120, 180, 230, 380, 400, 500]; % Boundaries for each spacing bucket (Hz), determine this from natural frequencies above.
-space1 = [140:160];
-space2 = [250:350];
-space3 = [400:500];
-freq1 = [spacing_bucket(1):1/spacing_bucket(2):spacing_bucket(2)]; 
-freq2 = [spacing_bucket(3):1/(spacing_bucket(4)-spacing_bucket(3)):spacing_bucket(4)];
-freq3 = [spacing_bucket(5):1/(spacing_bucket(6)-spacing_bucket(5)):spacing_bucket(6)];
+space1 = [35:60];
+space2 = [65:85];
+space3 = [90:110];
+space4 = [140:160];
+space5 = [250:350];
+space6 = [400:500];
+space7 = [550:675];
+% freq1 = [spacing_bucket(1):1/spacing_bucket(2):spacing_bucket(2)]; 
+% freq2 = [spacing_bucket(3):1/(spacing_bucket(4)-spacing_bucket(3)):spacing_bucket(4)];
+% freq3 = [spacing_bucket(5):1/(spacing_bucket(6)-spacing_bucket(5)):spacing_bucket(6)];
 
 % for each section, take the half-power point amplitude
 % for i = 1:7
@@ -93,30 +100,58 @@ freq3 = [spacing_bucket(5):1/(spacing_bucket(6)-spacing_bucket(5)):spacing_bucke
 hpp(1,1) = max(Hmag(1,(space1)))/sqrt(2);
 hpp(1,2) = max(Hmag(1,(space2)))/sqrt(2);
 hpp(1,3) = max(Hmag(1,(space3)))/sqrt(2);
+hpp(1,4) = max(Hmag(1,(space4)))/sqrt(2);
+hpp(1,5) = max(Hmag(1,(space5)))/sqrt(2);
+hpp(1,6) = max(Hmag(1,(space6)))/sqrt(2);
+hpp(1,7) = max(Hmag(1,(space7)))/sqrt(2);
 
 hpp(2,1) = max(Hmag(2,(space1)))/sqrt(2);
 hpp(2,2) = max(Hmag(2,(space2)))/sqrt(2);
 hpp(2,3) = max(Hmag(2,(space3)))/sqrt(2);
+hpp(2,4) = max(Hmag(2,(space4)))/sqrt(2);
+hpp(2,5) = max(Hmag(2,(space5)))/sqrt(2);
+hpp(2,6) = max(Hmag(2,(space6)))/sqrt(2);
+hpp(2,7) = max(Hmag(2,(space7)))/sqrt(2);
 
 hpp(3,1) = max(Hmag(3,(space1)))/sqrt(2);
 hpp(3,2) = max(Hmag(3,(space2)))/sqrt(2);
 hpp(3,3) = max(Hmag(3,(space3)))/sqrt(2);
+hpp(3,4) = max(Hmag(3,(space4)))/sqrt(2);
+hpp(3,5) = max(Hmag(3,(space5)))/sqrt(2);
+hpp(3,6) = max(Hmag(3,(space6)))/sqrt(2);
+hpp(3,7) = max(Hmag(3,(space7)))/sqrt(2);
 
 hpp(4,1) = max(Hmag(4,(space1)))/sqrt(2);
 hpp(4,2) = max(Hmag(4,(space2)))/sqrt(2);
 hpp(4,3) = max(Hmag(4,(space3)))/sqrt(2);
+hpp(4,4) = max(Hmag(4,(space4)))/sqrt(2);
+hpp(4,5) = max(Hmag(4,(space5)))/sqrt(2);
+hpp(4,6) = max(Hmag(4,(space6)))/sqrt(2);
+hpp(4,7) = max(Hmag(4,(space7)))/sqrt(2);
 
 hpp(5,1) = max(Hmag(5,(space1)))/sqrt(2);
 hpp(5,2) = max(Hmag(5,(space2)))/sqrt(2);
 hpp(5,3) = max(Hmag(5,(space3)))/sqrt(2);
+hpp(5,4) = max(Hmag(5,(space4)))/sqrt(2);
+hpp(5,5) = max(Hmag(5,(space5)))/sqrt(2);
+hpp(5,6) = max(Hmag(5,(space6)))/sqrt(2);
+hpp(5,7) = max(Hmag(5,(space7)))/sqrt(2);
 
 hpp(6,1) = max(Hmag(6,(space1)))/sqrt(2);
 hpp(6,2) = max(Hmag(6,(space2)))/sqrt(2);
 hpp(6,3) = max(Hmag(6,(space3)))/sqrt(2);
+hpp(6,4) = max(Hmag(6,(space4)))/sqrt(2);
+hpp(6,5) = max(Hmag(6,(space5)))/sqrt(2);
+hpp(6,6) = max(Hmag(6,(space6)))/sqrt(2);
+hpp(6,7) = max(Hmag(6,(space7)))/sqrt(2);
 
 hpp(7,1) = max(Hmag(7,(space1)))/sqrt(2);
 hpp(7,2) = max(Hmag(7,(space2)))/sqrt(2);
 hpp(7,3) = max(Hmag(7,(space3)))/sqrt(2);
+hpp(7,4) = max(Hmag(7,(space4)))/sqrt(2);
+hpp(7,5) = max(Hmag(7,(space5)))/sqrt(2);
+hpp(7,6) = max(Hmag(7,(space6)))/sqrt(2);
+hpp(7,7) = max(Hmag(7,(space7)))/sqrt(2);
 
 
 for p = 1:7
