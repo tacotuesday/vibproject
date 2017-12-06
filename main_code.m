@@ -225,16 +225,38 @@ end
 % fprintf('Measured modal masses (assuming x1=1):')
 disp(m)
 
-% plot routine
-figure(12)   % plot real components of H versus frequencies
-for j = 1:3
-    plot(1:7, u_measured(:,j)); hold on
-end
-title('Mode shapes at each natural frequency/damping ratio')
-xlabel('Location'); ylabel('Relative Magnitude'); set(gca,'XTick',0:5);
-% ylim([-2 2]);
-legend('Mode Shape 1', 'Mode Shape 2', 'Mode Shape 3'); grid; hold off;
 
+%% PLOT MODE SHAPES: Original loop would have been great, but Richards wants
+% one figure per mode shape.
+% Plot Mode 1
+figure(22)
+plot(1:7,[0 0 0 0 0 0 0]);
+hold on
+plot(1:7, u_measured(:,1))
+title('Mode 1 Shape (Unmodified)')
+xlabel('Location'); ylabel('Relative Magnitude'); 
+axis([1 7 -4 4]);
+legend('Original Shape','Mode 1');
+
+% Plot Mode 2
+figure(23)
+plot(1:7,[0 0 0 0 0 0 0]);
+hold on
+plot(1:7, u_measured(:,2))
+title('Mode 2 Shape (Unmodified)')
+xlabel('Location'); ylabel('Relative Magnitude'); 
+axis([1 7 -4 4]);
+legend('Original Shape','Mode 2');
+
+% Plot Mode 3
+figure(24)
+plot(1:7,[0 0 0 0 0 0 0]);
+hold on
+plot(1:7, u_measured(:,3))
+title('Mode 3 Shape (Unmodified)')
+xlabel('Location'); ylabel('Relative Magnitude'); 
+axis([1 7 -4 4]);
+legend('Original Shape','Mode 3');
 %% Synthesized Frequency Response Functions
 % Much of this code is adapated from the
 % superposition_freq_domain_altered.m class example
@@ -297,7 +319,7 @@ for pl = 1:7 % plotting coherence and FRFs
     figure()
     subplot(2,1,1);
     plot(freqH,abs(X(pl,:,1))); hold on
-    title(['Sensor Location ' num2str(pl) ' Response'])
+    title(['Sensor Location ' num2str(pl) ' Response (Unmodified)'])
     xlabel('Frequency (Hz)'); ylabel('|H|');
     subplot(2,1,2);
     plot(freqH,coh(pl,:));
