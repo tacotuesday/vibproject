@@ -3,8 +3,8 @@ clear all
 close all;
 
 %% Creating H matrix
-load no_weight_data.mat;
-%load weight_data.mat;   % Comment/uncomment whichever data file is being analyzed.
+%load no_weight_data.mat;
+load weight_data_3.mat;   % Comment/uncomment whichever data file is being analyzed.
 
 [fft,freqH] = fft_func(data.x_sample,data.Nf);
 
@@ -61,7 +61,7 @@ legend('H_1_2','H_2_2','H_3_2','H_4_2','H_5_2','H_6_2','H_7_2');
 grid on
 
 % Determine natural frequencies from FRF of each accelerometer
-omega = [45 75 100 150 300 450 625];
+omega = [40.6, 79.6, 100, 150.1, 298, 451, 612];
 % omega_1 = [147.8, 150.1, 152, 150.5, 152.3, 150.6, 150.5];
 % omega_2 = [291.5, 302.7, 305.3, 295, 291.8, 291.8, 292.7];
 % omega_3 = [450.8, 450.8, 451.0, 450.6, 456, 452.2, 451.7];
@@ -78,7 +78,7 @@ Himag = imag(H); % imaginary component of H
 Hmag = sqrt(Hreal.^2.+Himag.^2); % magnitude of H
 
 % the frequencies must be partitioned out into 3 sections to plot lines
-spacing_bucket = [120, 180, 230, 380, 400, 500]; % Boundaries for each spacing bucket (Hz), determine this from natural frequencies above.
+spacing_bucket = [35, 60, 65, 85, 90, 110, 140, 160, 250, 350, 400, 500, 550, 675]; % Boundaries for each spacing bucket (Hz), determine this from natural frequencies above.
 space1 = [35:60];
 space2 = [65:85];
 space3 = [90:110];
@@ -86,9 +86,13 @@ space4 = [140:160];
 space5 = [250:350];
 space6 = [400:500];
 space7 = [550:675];
-% freq1 = [spacing_bucket(1):1/spacing_bucket(2):spacing_bucket(2)]; 
-% freq2 = [spacing_bucket(3):1/(spacing_bucket(4)-spacing_bucket(3)):spacing_bucket(4)];
-% freq3 = [spacing_bucket(5):1/(spacing_bucket(6)-spacing_bucket(5)):spacing_bucket(6)];
+freq1 = [spacing_bucket(1):1/spacing_bucket(2):spacing_bucket(2)]; 
+freq2 = [spacing_bucket(3):1/(spacing_bucket(4)-spacing_bucket(3)):spacing_bucket(4)];
+freq3 = [spacing_bucket(5):1/(spacing_bucket(6)-spacing_bucket(5)):spacing_bucket(6)];
+freq4 = [spacing_bucket(7):1/(spacing_bucket(8)-spacing_bucket(7)):spacing_bucket(8)];
+freq5 = [spacing_bucket(9):1/(spacing_bucket(10)-spacing_bucket(9)):spacing_bucket(10)];
+freq6 = [spacing_bucket(11):1/(spacing_bucket(12)-spacing_bucket(11)):spacing_bucket(12)];
+freq7 = [spacing_bucket(13):1/(spacing_bucket(14)-spacing_bucket(13)):spacing_bucket(14)];
 
 % for each section, take the half-power point amplitude
 % for i = 1:7
@@ -96,6 +100,16 @@ space7 = [550:675];
 %         hpp(i,j) = max(Hmag(i,space(j,1)))/sqrt(2);
 %     end
 % end
+
+space1 = [35:60];
+space2 = [65:85];
+space3 = [90:110];
+space4 = [140:160];
+space5 = [250:350];
+space6 = [400:500];
+space7 = [550:675];
+
+freqLength=0:20;
 
 hpp(1,1) = max(Hmag(1,(space1)))/sqrt(2);
 hpp(1,2) = max(Hmag(1,(space2)))/sqrt(2);
@@ -161,6 +175,11 @@ for p = 1:7
     plot(freq1,hpp(p,1)*ones(1,length(freq1)));
     plot(freq2,hpp(p,2)*ones(1,length(freq2)));
     plot(freq3,hpp(p,3)*ones(1,length(freq3)));
+    plot(freq4,hpp(p,5)*ones(1,length(freq4)));
+    plot(freq5,hpp(p,5)*ones(1,length(freq5)));
+    plot(freq6,hpp(p,6)*ones(1,length(freq6)));
+    plot(freq7,hpp(p,7)*ones(1,length(freq7)));
+    % plot(freq7,hpp(p,3)*ones(1,length(freq7)));
     title('Magnutude of measured FRFs of a force applied to 2nd mass')
     xlabel('frequency (Hz)'); ylabel('H(\omega)'); % no units given for Re[H(\omega)]
     legend(['H_' num2str(p) '_2'],['hpp' num2str(p) '_1'],['hpp' num2str(p) '_2'],...
@@ -168,37 +187,65 @@ for p = 1:7
     grid on; 
 end
 
-omegazeta(1,1,:) = [144.7, 161.5];
-omegazeta(1,2,:) = [288.6, 306.1];
-omegazeta(1,3,:) = [436, 457.3];
-omegazeta(2,1,:) = [144.8, 157.1];
-omegazeta(2,2,:) = [294.8, 320.4];
-omegazeta(2,3,:) = [442, 463.7];
-omegazeta(3,1,:) = [145.3, 153.6];
-omegazeta(3,2,:) = [296, 317.2];
-omegazeta(3,3,:) = [441.3, 460.2];
-omegazeta(4,1,:) = [157.1, 205.1];
-omegazeta(4,2,:) = [279.8, 304.2];
-omegazeta(4,3,:) = [441, 461.2];
-omegazeta(5,1,:) = [146.4, 154.9];
-omegazeta(5,2,:) = [288.2, 305.7];
-omegazeta(5,3,:) = [442, 483];
-omegazeta(6,1,:) = [143.7, 156.8];
-omegazeta(6,2,:) = [296.2, 327.1];
-omegazeta(6,3,:) = [439.2, 461.2];
-omegazeta(7,1,:) = [144.4, 156.7];
-omegazeta(7,2,:) = [282.7, 299.3];
-omegazeta(7,3,:) = [443.7, 464];
+omegazeta(1,1,:) = [36.52, 46.5];
+omegazeta(1,2,:) = [72.25, 80.6];
+omegazeta(1,3,:) = [96.8, 107.3];
+omegazeta(1,4,:) = [NaN, NaN];
+omegazeta(1,5,:) = [288.7, 307];
+omegazeta(1,6,:) = [436, 457.6];
+omegazeta(1,7,:) = [596.9, 624.3];
+omegazeta(2,1,:) = [38.7, 45.12];
+omegazeta(2,2,:) = [77.5, 81.75];
+omegazeta(2,3,:) = [96.1, 105.8];
+omegazeta(2,4,:) = [144.3, 161.1];
+omegazeta(2,5,:) = [295.8, 319.8];
+omegazeta(2,6,:) = [442.9, 463.6];
+omegazeta(2,7,:) = [604.1, 627];
+omegazeta(3,1,:) = [38.02, 42.93];
+omegazeta(3,2,:) = [77.35, 82.25];
+omegazeta(3,3,:) = [92.8, 103.8];
+omegazeta(3,4,:) = [NaN, NaN];
+omegazeta(3,5,:) = [295.9, 318.1];
+omegazeta(3,6,:) = [441.3, 460.3];
+omegazeta(3,7,:) = [653.9, 685.3];
+omegazeta(4,1,:) = [36.38, 43.95];
+omegazeta(4,2,:) = [78.05, 83.2];
+omegazeta(4,3,:) = [NaN, 102.2];
+omegazeta(4,4,:) = [143.5, 156.8];
+omegazeta(4,5,:) = [285.5, 299.9];
+omegazeta(4,6,:) = [443.5, 464.4];
+omegazeta(4,7,:) = [601.8, 624.7];
+omegazeta(5,1,:) = [39.65, 44.68];
+omegazeta(5,2,:) = [78.35, NaN];
+omegazeta(5,3,:) = [NaN, 102.3];
+omegazeta(5,4,:) = [NaN, NaN];
+omegazeta(5,5,:) = [278.6, 328];
+omegazeta(5,6,:) = [438.9, 463.1];
+omegazeta(5,7,:) = [608.3, 666.8];
+omegazeta(6,1,:) = [38.32, 43.4];
+omegazeta(6,2,:) = [75.55, 81];
+omegazeta(6,3,:) = [95.9, 105.7];
+omegazeta(6,4,:) = [NaN, NaN];
+omegazeta(6,5,:) = [287.5, 306.1];
+omegazeta(6,6,:) = [443.1, 483.8];
+omegazeta(6,7,:) = [649.8, NaN];
+omegazeta(7,1,:) = [39.63, 44.4];
+omegazeta(7,2,:) = [78.1, 83.25];
+omegazeta(7,3,:) = [NaN, NaN];
+omegazeta(7,4,:) = [NaN, NaN];
+omegazeta(7,5,:) = [279.6, 304];
+omegazeta(7,6,:) = [440.4, 461.7];
+omegazeta(7,7,:) = [605.2, 635.8];
 
 for i = 1:7 		% Calculating possible zeta values
-    for j = 1:3
+    for j = 1:7
         zetar(i,j,1) = sqrt(1/2 + sqrt(1 - (((omegazeta(i,j,1)^2 - omegazeta(i,j,2)^2)/omega(j)^2)^2)/4)/2);
         zetar(i,j,2) = sqrt(1/2 - sqrt(1 - (((omegazeta(i,j,1)^2 - omegazeta(i,j,2)^2)/omega(j)^2)^2)/4)/2);
     end
 end
 
 for i = 1:7 	% rewriting averaging function into a general case to eliminate bad values
-    for j = 1:3
+    for j = 1:7
         for k = 1:2 	% positive and negative value only
             if zetar(i,j,k)<0.7 % assuming smaller value is good
                 zetaverage(i,j) = zetar(i,j,k);
@@ -209,7 +256,7 @@ for i = 1:7 	% rewriting averaging function into a general case to eliminate bad
     end
 end
 
-for i = 1:3 % averaging zeta values for final result
+for i = 1:7 % averaging zeta values for final result
     zeta(i) = mean(nonzeros(zetaverage(:,i)));
 end
 
@@ -231,8 +278,8 @@ legend('H_1_2', 'H_2_2', 'H_3_2', 'H_4_2', 'H_5_2','H_6_2','H_7_2'); grid;
 
 % The unscaled magnitudes of Himag at the natural frequencies were determined from figure(3)
 % remember to check the magnitude of this function here
-Himag1 = [-.26, -.6, 1.08];
-Himag2 = [-.98,-.74,-1.53];
+Himag1 = [.9439, .7001, .0325];
+Himag2 = [1.213,.9018, .7249];
 Himag3 = [-.19, -.93, 1.35];
 Himag4 = [.02, .66, 1.4];
 Himag5 = [.26, -.47, .95];
